@@ -1,6 +1,7 @@
 CMAKE_MINIMUM_REQUIRED(VERSION 3.0.2)
 PROJECT(dynamicEDT3D)
 
+set(CMAKE_BUILD_TYPE Release)
 include(CTest)
 include(GNUInstallDirs)
 

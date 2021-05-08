@@ -58,8 +58,8 @@ DynamicEDTOctomapBase<TREE>::~DynamicEDTOctomapBase() {
 
 
 template <class TREE>
-void DynamicEDTOctomapBase<TREE>::update(bool updateRealDist){
-
+void DynamicEDTOctomapBase<TREE>::update(bool updateRealDist,bool verbose,int* numUpdatePnt){
+    int n =0 ;
 	for(octomap::KeyBoolMap::const_iterator it = octree->changedKeysBegin(), end=octree->changedKeysEnd(); it!=end; ++it){
 		//the keys in this list all go down to the lowest level!
 
@@ -75,10 +75,14 @@ void DynamicEDTOctomapBase<TREE>::update(bool updateRealDist){
 		assert(node);
 		//"node" is not necessarily at lowest level, BUT: the occupancy value of this node
 		//has to be the same as of the node indexed by the key *it
-
+        n++;
 		updateMaxDepthLeaf(key, octree->isNodeOccupied(node));
 	}
+	if (verbose){
+	    std::cout << "EDF: " << n << " new points were processed from octomap " << std::endl;
+	}
 	octree->resetChangeDetection();
+
 
 	DynamicEDT3D::update(updateRealDist);
 }

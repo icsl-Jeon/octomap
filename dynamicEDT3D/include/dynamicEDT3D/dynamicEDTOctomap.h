@@ -44,7 +44,7 @@
 
 /// A DynamicEDTOctomapBase object connects a DynamicEDT3D object to an octomap.
 template <class TREE>
-class DynamicEDTOctomapBase: private DynamicEDT3D {
+class DynamicEDTOctomapBase: public DynamicEDT3D {
 public:
     /** Create a DynamicEDTOctomapBase object that maintains a distance transform in the bounding box given by bbxMin, bbxMax and clamps distances at maxdist.
      *  treatUnknownAsOccupied configures the treatment of unknown cells in the distance computation.
@@ -59,7 +59,7 @@ public:
 
 	///trigger updating of the distance map. This will query the octomap for the set of changes since the last update.
 	///If you set updateRealDist to false, computations will be faster (square root will be omitted), but you can only retrieve squared distances
-	virtual void update(bool updateRealDist=true);
+	virtual void update(bool updateRealDist=true,bool verbose = false, int* numUpdate = NULL);
 
 	///retrieves distance and closestObstacle (closestObstacle is to be discarded if distance is maximum distance, the method does not write closestObstacle in this case).
 	///Returns DynamicEDTOctomapBase::distanceValue_Error if point is outside the map.
@@ -104,14 +104,15 @@ public:
 	///distance value returned when requesting distance in cell units for a cell outside the map
 	static int distanceInCellsValue_Error;
 
+    void worldToMap(const octomap::point3d &p, int &x, int &y, int &z) const;
+    void mapToWorld(int x, int y, int z, octomap::point3d &p) const;
+    void mapToWorld(int x, int y, int z, octomap::OcTreeKey &key) const;
+
 private:
 	void initializeOcTree(octomap::point3d bbxMin, octomap::point3d bbxMax);
 	void insertMaxDepthLeafAtInitialize(octomap::OcTreeKey key);
 	void updateMaxDepthLeaf(octomap::OcTreeKey& key, bool occupied);
 
-	void worldToMap(const octomap::point3d &p, int &x, int &y, int &z) const;
-	void mapToWorld(int x, int y, int z, octomap::point3d &p) const;
-	void mapToWorld(int x, int y, int z, octomap::OcTreeKey &key) const;
 
 	TREE* octree;
 	bool unknownOccupied;
