@@ -81,6 +81,7 @@ void DynamicEDTOctomapBase<TREE>::update(bool updateRealDist,bool verbose,int* n
 	if (verbose){
 	    std::cout << "EDF: " << n << " new points were processed from octomap " << std::endl;
 	}
+	*numUpdatePnt = n;
 	octree->resetChangeDetection();
 
 
