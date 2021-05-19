@@ -84,10 +84,12 @@ int DynamicEDTOctomapBase<TREE>::update(bool updateRealDist,bool verbose ){
 //	if (numUpdatePnt != NULL)
 //	    *numUpdatePnt = n;
 	octree->resetChangeDetection();
-	return n;
 
 
 	DynamicEDT3D::update(updateRealDist);
+
+
+    return n;
 }
 
 template <class TREE>
