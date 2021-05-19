@@ -58,7 +58,7 @@ DynamicEDTOctomapBase<TREE>::~DynamicEDTOctomapBase() {
 
 
 template <class TREE>
-void DynamicEDTOctomapBase<TREE>::update(bool updateRealDist,bool verbose,int* numUpdatePnt){
+int DynamicEDTOctomapBase<TREE>::update(bool updateRealDist,bool verbose ){
     int n =0 ;
 	for(octomap::KeyBoolMap::const_iterator it = octree->changedKeysBegin(), end=octree->changedKeysEnd(); it!=end; ++it){
 		//the keys in this list all go down to the lowest level!
@@ -81,9 +81,10 @@ void DynamicEDTOctomapBase<TREE>::update(bool updateRealDist,bool verbose,int* n
 	if (verbose){
 	    std::cout << "EDF: " << n << " new points were processed from octomap " << std::endl;
 	}
-	if (numUpdatePnt != NULL)
-	    *numUpdatePnt = n;
+//	if (numUpdatePnt != NULL)
+//	    *numUpdatePnt = n;
 	octree->resetChangeDetection();
+	return n;
 
 
 	DynamicEDT3D::update(updateRealDist);

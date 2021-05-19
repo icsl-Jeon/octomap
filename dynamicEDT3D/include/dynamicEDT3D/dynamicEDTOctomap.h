@@ -59,7 +59,7 @@ public:
 
 	///trigger updating of the distance map. This will query the octomap for the set of changes since the last update.
 	///If you set updateRealDist to false, computations will be faster (square root will be omitted), but you can only retrieve squared distances
-	virtual void update(bool updateRealDist=true,bool verbose = false, int* numUpdate = NULL);
+	virtual int update(bool updateRealDist=true,bool verbose = false);
 
 	///retrieves distance and closestObstacle (closestObstacle is to be discarded if distance is maximum distance, the method does not write closestObstacle in this case).
 	///Returns DynamicEDTOctomapBase::distanceValue_Error if point is outside the map.
